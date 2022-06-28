@@ -65,6 +65,10 @@ const typeDefs = gql`
     user_id: ID
   }
 
+  type DeleteAllOutput {
+    count: Int!
+  }
+
   type Query {
     #users
     users: [User!]!
@@ -84,16 +88,19 @@ const typeDefs = gql`
     createUser(data: CreateUserInput!): User!
     updateUser(id: ID!, data: UpdateUserInput!): User!
     deleteUser(id: ID!): User!
+    deleteAllUsers: DeleteAllOutput!
 
     #post
     createPost(data: CreatePostInput!): Post!
     updatePost(id: ID!, data: UpdatePostInput!): Post!
     deletePost(id: ID!): Post!
+    deleteAllPosts: DeleteAllOutput!
 
     #comment
     createComment(data: CreateCommentInput!): Comment!
     updateComment(id: ID!, data: UpdateCommentInput!): Comment!
     deleteComment(id: ID!): Comment!
+    deleteAllComments: DeleteAllOutput!
   }
 `;
 
@@ -184,6 +191,14 @@ const resolvers = {
 
       return deletedUser;
     },
+    deleteAllUsers: () => {
+      const length = users.length;
+      users.splice(0, length);
+
+      return {
+        count: length,
+      };
+    },
 
     //Post
     createPost: (parent, { data }) => {
@@ -221,6 +236,14 @@ const resolvers = {
 
       return deletedPost;
     },
+    deleteAllPosts: () => {
+      const length = posts.length;
+      posts.splice(0, length);
+
+      return {
+        count: length,
+      };
+    },
 
     //Comment
     createComment: (parent, { data }) => {
@@ -257,6 +280,14 @@ const resolvers = {
       comments.splice(comment_index, 1);
 
       return deletedComment;
+    },
+    deleteAllComments: () => {
+      const length = comments.length;
+      comments.splice(0, length);
+
+      return {
+        count: length,
+      };
     },
   },
 };

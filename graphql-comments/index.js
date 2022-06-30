@@ -2,7 +2,7 @@ const { createServer } = require('http');
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
-const { PubSub } = require('graphql-subscriptions');
+const { PubSub, withFilter } = require('graphql-subscriptions');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { WebSocketServer } = require('ws');
 const { useServer } = require('graphql-ws/lib/use/ws');
@@ -118,13 +118,13 @@ const typeDefs = gql`
     userDeleted: User!
 
     #post subs
-    postCreated: Post!
+    postCreated(user_id: ID): Post!
     postUpdated: Post!
     postDeleted: Post!
     postCount: Int!
 
     #comment subs
-    commentCreated: Comment!
+    commentCreated(post_id: ID): Comment!
     commentUpdated: Comment!
     commentDeleted: Comment!
     commentCount: Int!
@@ -344,7 +344,14 @@ const resolvers = {
 
     // post
     postCreated: {
-      subscribe: () => pubsub.asyncIterator('postCreated'),
+      subscribe: withFilter(
+        () => pubsub.asyncIterator('postCreated'),
+        (payload, variables) => {
+          return variables.user_id
+            ? payload.postCreated.user_id === variables.user_id
+            : true;
+        }
+      ),
     },
     postUpdated: {
       subscribe: () => pubsub.asyncIterator('postUpdated'),
@@ -364,7 +371,14 @@ const resolvers = {
 
     // comment
     commentCreated: {
-      subscribe: () => pubsub.asyncIterator('commentCreated'),
+      subscribe: withFilter(
+        () => pubsub.asyncIterator('commentCreated'),
+        (payload, variables) => {
+          return variables.post_id
+            ? payload.commentCreated.post_id === variables.post_id
+            : true;
+        }
+      ),
     },
     commentUpdated: {
       subscribe: () => pubsub.asyncIterator('commentUpdated'),

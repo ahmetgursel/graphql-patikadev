@@ -9,9 +9,9 @@ const { useServer } = require('graphql-ws/lib/use/ws');
 
 const { nanoid } = require('nanoid');
 const { users, posts, comments } = require('./data');
+const pubsub = require('./pubsub');
 
 const PORT = 4000;
-const pubsub = new PubSub();
 
 const typeDefs = gql`
   #User

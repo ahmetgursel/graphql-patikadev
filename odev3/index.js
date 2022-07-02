@@ -2,7 +2,6 @@ const { createServer } = require('http');
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
-const { withFilter } = require('graphql-subscriptions');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { WebSocketServer } = require('ws');
 const { useServer } = require('graphql-ws/lib/use/ws');
@@ -162,6 +161,24 @@ const typeDefs = gql`
     userCreated: User!
     userUpdated: User!
     userDeleted: User!
+
+    #event
+    eventCreated: Event!
+    eventUpdated: Event!
+    eventDeleted: Event!
+    eventCount: Int!
+
+    #participant
+    participantCreated: Participant!
+    participantUpdated: Participant!
+    participantDeleted: Participant!
+    partipantCount: Int!
+
+    #
+    locationCreated: Location!
+    locationUpdated: Location!
+    locationDeleted: Location!
+    locationCount: Int!
   }
 `;
 
@@ -284,6 +301,7 @@ const resolvers = {
     createEvent: (parent, { data }) => {
       const event = { id: nanoid(), ...data };
       events.push(event);
+      pubsub.publish('eventCreated', { eventCreated: event });
       return event;
     },
     updateEvent: (parent, { id, data }) => {
@@ -299,7 +317,7 @@ const resolvers = {
         ...events[event_index],
         ...data,
       });
-
+      pubsub.publish('eventUpdated', { eventUpdated: updatedEvent });
       return updatedEvent;
     },
     deleteEvent: (parent, { id }) => {
@@ -313,7 +331,7 @@ const resolvers = {
 
       const deletedEvent = events[event_index];
       events.splice(event_index, 1);
-
+      pubsub.publish('eventDeleted', { eventDeleted: deletedEvent });
       return deletedEvent;
     },
     deleteAllEvents: () => {
@@ -426,6 +444,17 @@ const resolvers = {
     },
     userDeleted: {
       subscribe: () => pubsub.asyncIterator('userDeleted'),
+    },
+
+    //event
+    eventCreated: {
+      subscribe: () => pubsub.asyncIterator('eventCreated'),
+    },
+    eventUpdated: {
+      subscribe: () => pubsub.asyncIterator('eventUpdated'),
+    },
+    eventDeleted: {
+      subscribe: () => pubsub.asyncIterator('eventDeleted'),
     },
   },
 };

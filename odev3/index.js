@@ -1,10 +1,17 @@
-const { ApolloServer, gql } = require('apollo-server');
-const {
-  ApolloServerPluginLandingPageGraphQLPlayground,
-} = require('apollo-server-core');
-const { nanoid } = require('nanoid');
+const { createServer } = require('http');
+const express = require('express');
+const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
+const { withFilter } = require('graphql-subscriptions');
+const { makeExecutableSchema } = require('@graphql-tools/schema');
+const { WebSocketServer } = require('ws');
+const { useServer } = require('graphql-ws/lib/use/ws');
 
+const { nanoid } = require('nanoid');
 const { events, locations, users, participants } = require('./data.json');
+const pubsub = require('./pubsub');
+
+const PORT = 4000;
 
 const typeDefs = gql`
   #User
@@ -149,6 +156,13 @@ const typeDefs = gql`
     deleteLocation(id: ID!): Location!
     deleteAllLocations: DeleteAllOutput!
   }
+
+  type Subscription {
+    #user subs
+    userCreated: User!
+    userUpdated: User!
+    userDeleted: User!
+  }
 `;
 
 const resolvers = {
@@ -228,6 +242,7 @@ const resolvers = {
     createUser: (parent, { data }) => {
       const user = { id: nanoid(), ...data };
       users.push(user);
+      pubsub.publish('userCreated', { userCreated: user });
       return user;
     },
     updateUser: (parent, { id, data }) => {
@@ -241,7 +256,7 @@ const resolvers = {
         ...users[user_index],
         ...data,
       });
-
+      pubsub.publish('userUpdated', { userUpdated: updatedUser });
       return updatedUser;
     },
     deleteUser: (parent, { id }) => {
@@ -253,7 +268,7 @@ const resolvers = {
 
       const deletedUser = users[user_index];
       users.splice(user_index, 1);
-
+      pubsub.publish('userDeleted', { userDeleted: deletedUser });
       return deletedUser;
     },
     deleteAllUsers: () => {
@@ -400,14 +415,73 @@ const resolvers = {
       };
     },
   },
+
+  Subscription: {
+    //user
+    userCreated: {
+      subscribe: () => pubsub.asyncIterator('userCreated'),
+    },
+    userUpdated: {
+      subscribe: () => pubsub.asyncIterator('userUpdated'),
+    },
+    userDeleted: {
+      subscribe: () => pubsub.asyncIterator('userDeleted'),
+    },
+  },
 };
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  plugins: [ApolloServerPluginLandingPageGraphQLPlayground({})],
-});
+async function startApolloServer() {
+  // Create schema, which will be used separately by ApolloServer and
+  // the WebSocket server.
+  const schema = makeExecutableSchema({ typeDefs, resolvers });
 
-server.listen().then(({ url }) => {
-  console.log(`Server is ready at ${url}`);
-});
+  // Create an Express app and HTTP server; we will attach the WebSocket
+  // server and the ApolloServer to this HTTP server.
+  const app = express();
+  const httpServer = createServer(app);
+
+  // Set up WebSocket server.
+  const wsServer = new WebSocketServer({
+    server: httpServer,
+    path: '/graphql',
+  });
+  const serverCleanup = useServer({ schema }, wsServer);
+
+  // Set up ApolloServer.
+  const server = new ApolloServer({
+    schema,
+    context: {
+      pubsub,
+    },
+    plugins: [
+      // Proper shutdown for the HTTP server.
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+
+      // Proper shutdown for the WebSocket server.
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              await serverCleanup.dispose();
+            },
+          };
+        },
+      },
+    ],
+  });
+
+  await server.start();
+  server.applyMiddleware({ app });
+
+  // Now that our HTTP server is fully set up, actually listen.
+  httpServer.listen(PORT, () => {
+    console.log(
+      `🚀 Query endpoint ready at http://localhost:${PORT}${server.graphqlPath}`
+    );
+    console.log(
+      `🚀 Subscription endpoint ready at ws://localhost:${PORT}${server.graphqlPath}`
+    );
+  });
+}
+
+startApolloServer();

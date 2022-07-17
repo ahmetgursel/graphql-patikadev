@@ -1,20 +1,14 @@
 const { createServer } = require('http');
 const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { WebSocketServer } = require('ws');
 const { useServer } = require('graphql-ws/lib/use/ws');
 const db = require('./data');
 const pubsub = require('./pubsub');
-const { loadSchemaSync } = require('@graphql-tools/load');
-const { GraphQLFileLoader } = require('@graphql-tools/graphql-file-loader');
-
-const resolvers = require('./graphql/resolvers/index');
-
-const typeDefs = loadSchemaSync('./**/*.graphql', {
-  loaders: [new GraphQLFileLoader()],
-});
+const typeDefs = require('./graphql/typeDefs');
+const resolvers = require('./graphql/resolvers');
 
 const PORT = 4000;
 

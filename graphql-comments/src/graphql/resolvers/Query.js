@@ -1,4 +1,4 @@
-const Query = {
+export const Query = {
   // user
   users: (_, __, { db }) => db.users,
   user: (_, args, { db }) => {
@@ -32,5 +32,3 @@ const Query = {
     }
   },
 };
-
-module.exports.Query = Query;

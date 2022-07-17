@@ -1,14 +1,14 @@
-const { createServer } = require('http');
-const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
-const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
-const { makeExecutableSchema } = require('@graphql-tools/schema');
-const { WebSocketServer } = require('ws');
-const { useServer } = require('graphql-ws/lib/use/ws');
-const db = require('./data');
-const pubsub = require('./pubsub');
-const typeDefs = require('./graphql/typeDefs');
-const resolvers = require('./graphql/resolvers');
+import { createServer } from 'http';
+import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+import db from './data';
+import pubsub from './pubsub';
+import typeDefs from '@type-defs';
+import resolvers from '@resolvers';
 
 const PORT = 4000;
 

@@ -1,7 +1,7 @@
-const { nanoid } = require('nanoid');
-const pubsub = require('../../pubsub');
+import { nanoid } from 'nanoid';
+import pubsub from '../../pubsub';
 
-const Mutation = {
+export const Mutation = {
   //User
   createUser: (_, { data }, { db }) => {
     const user = { id: nanoid(), ...data };
@@ -146,5 +146,3 @@ const Mutation = {
     };
   },
 };
-
-module.exports.Mutation = Mutation;

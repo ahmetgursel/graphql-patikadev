@@ -10,7 +10,6 @@ const items = [
 
 function HeaderMenu() {
   const location = useLocation();
-  console.log(location);
 
   return (
     <div>

@@ -20,12 +20,16 @@ const posts = [
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos, illo!',
     user_id: '1',
+    cover:
+      'https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
   },
   {
     id: '2',
     title: "Mehmet'in diger gonderisi",
     description: 'Lorem ipsum dolor sit amet consectetur adipisicing.',
     user_id: '1',
+    cover:
+      'https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
   },
   {
     id: '3',
@@ -33,6 +37,8 @@ const posts = [
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam!',
     user_id: '2',
+    cover:
+      'https://images.unsplash.com/photo-1523867574998-1a336b6ded04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
   },
 ];
 

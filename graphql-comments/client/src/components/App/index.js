@@ -6,6 +6,7 @@ import HeaderMenu from './HeaderMenu';
 //pages
 import Home from 'pages/Home';
 import NewPost from 'pages/NewPost';
+import Post from 'pages/Post';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
           <div className={styles.content}>
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='new' element={<NewPost />} />
+              <Route path='/new' element={<NewPost />} />
+              <Route path='/post/:id' element={<Post />} />
             </Routes>
           </div>
         </Col>

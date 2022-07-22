@@ -3,6 +3,7 @@ import { Avatar, List } from 'antd';
 import { useQuery } from '@apollo/client';
 import Loading from 'components/Loading';
 import { GET_POSTS } from './queries';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const { loading, error, data } = useQuery(GET_POSTS);
@@ -27,7 +28,7 @@ function Home() {
           <List.Item>
             <List.Item.Meta
               avatar={<Avatar src={item.user.profile_photo} />}
-              title={<a href='https://ant.design'>{item.title}</a>}
+              title={<Link to={`post/${item.id}`}>{item.title}</Link>}
               description={item.description}
             />
           </List.Item>

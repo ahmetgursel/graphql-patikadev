@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { Typography, Image } from 'antd';
 import Loading from 'components/Loading';
 import { GET_POST } from './queries';
+import styles from './styles.module.css';
 
 const { Title } = Typography;
 
@@ -29,7 +30,7 @@ function Post() {
     <div>
       <Title level={2}>{post.title}</Title>
       <Image src={post.cover} />
-      <div>{post.description}</div>
+      <div className={styles.description}>{post.description}</div>
     </div>
   );
 }

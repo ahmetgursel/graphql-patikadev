@@ -18,15 +18,21 @@ const posts = [
     id: '1',
     title: "Mehmet'in gonderisi",
     description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos, illo!',
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate quisquam amet quae odio voluptatem necessitatibus dolor, est ducimus sed officiis, numquam pariatur modi cum ipsa, exercitationem possimus perspiciatis dicta soluta? Nobis perferendis illum, sit fuga natus quasi soluta totam dolorem debitis eius quos placeat amet laboriosam libero ad, conseatum!',
+    short_description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate quisquam amet quae odio...',
     user_id: '1',
     cover:
       'https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
   },
+
   {
     id: '2',
     title: "Mehmet'in diger gonderisi",
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing.',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum autem cumque velit aliquid, odio quae magnam facere ullam alias reprehenderit aut perferendis pariatur voluptatibus eveniet. Ad temporibus facilis commodi quam unde odit, nihil doloribus libero laboriosam pariatur illo eaque sed maxime vero dolor facere rerum. Eaque, fugiat.',
+    short_description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum autem cumque velit...',
     user_id: '1',
     cover:
       'https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
@@ -35,7 +41,9 @@ const posts = [
     id: '3',
     title: "Ahmet'in gonderisi",
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam!',
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed a ipsum accusantium laboriosam, nostrum harum, rem numquam, maxime corrupti unde nobis! Odit ad cumque facere nesciunt perferendis quidem aliquid eaque similique voluptas?',
+    short_description:
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed a ipsum accusantium...',
     user_id: '2',
     cover:
       'https://images.unsplash.com/photo-1523867574998-1a336b6ded04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',

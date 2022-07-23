@@ -36,7 +36,7 @@ function Home() {
               }
               description={
                 <Link to={`post/${item.id}`} className={styles.listItem}>
-                  {item.description}
+                  {item.short_description}
                 </Link>
               }
             />

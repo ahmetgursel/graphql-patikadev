@@ -72,7 +72,7 @@ const comments = [
   {
     id: '4',
     text: "Bu Mehmet'in yorumudur.",
-    post_id: '3',
+    post_id: '2',
     user_id: '1',
   },
 ];

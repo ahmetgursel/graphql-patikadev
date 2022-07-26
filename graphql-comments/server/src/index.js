@@ -1,10 +1,7 @@
 import { createServer } from 'http';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import {
-  ApolloServerPluginDrainHttpServer,
-  ApolloServerPluginLandingPageGraphQLPlayground,
-} from 'apollo-server-core';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
@@ -44,7 +41,6 @@ async function startApolloServer() {
       db,
     },
     plugins: [
-      ApolloServerPluginLandingPageGraphQLPlayground(),
       // Proper shutdown for the HTTP server.
       ApolloServerPluginDrainHttpServer({ httpServer }),
 

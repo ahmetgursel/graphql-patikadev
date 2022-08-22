@@ -1,16 +1,17 @@
 import { nanoid } from 'nanoid';
 import pubsub from '../../pubsub';
+import db from '../../data';
 
 export const Mutation = {
   //User
-  createUser: (_, { data }, { db }) => {
+  createUser: (_, { data }, ___) => {
     const user = { id: nanoid(), ...data };
     db.users.push(user);
 
     pubsub.publish('userCreated', { userCreated: user });
     return user;
   },
-  updateUser: (_, { id, data }, { db }) => {
+  updateUser: (_, { id, data }, ___) => {
     const user_index = db.users.findIndex((user) => user.id === id);
 
     if (user_index === -1) {
@@ -26,7 +27,7 @@ export const Mutation = {
 
     return updatedUser;
   },
-  deleteUser: (_, { id }, { db }) => {
+  deleteUser: (_, { id }, ___) => {
     const user_index = db.users.findIndex((user) => user.id === id);
 
     if (user_index === -1) {
@@ -39,7 +40,7 @@ export const Mutation = {
 
     return deletedUser;
   },
-  deleteAllUsers: (_, __, { db }) => {
+  deleteAllUsers: (_, __, ___) => {
     const length = db.users.length;
     db.users.splice(0, length);
 
@@ -49,18 +50,18 @@ export const Mutation = {
   },
 
   //Post
-  createPost: (_, { data }, { db }) => {
+  createPost: (_, { data }, ___) => {
     const post = {
       id: nanoid(),
       ...data,
     };
 
-    db.posts.push(post);
+    db.posts.unshift(post);
     pubsub.publish('postCreated', { postCreated: post });
     pubsub.publish('postCount', { postCount: db.posts.length });
     return post;
   },
-  updatePost: (_, { id, data }, { db }) => {
+  updatePost: (_, { id, data }, ___) => {
     const post_index = db.posts.findIndex((post) => post.id === id);
 
     if (post_index === -1) {
@@ -74,7 +75,7 @@ export const Mutation = {
     pubsub.publish('postUpdated', { postUpdated: updatedPost });
     return updatedPost;
   },
-  deletePost: (_, { id }, { db }) => {
+  deletePost: (_, { id }, ___) => {
     const post_index = db.posts.findIndex((post) => post.id === id);
 
     if (post_index === -1) {
@@ -87,7 +88,7 @@ export const Mutation = {
     pubsub.publish('postCount', { postCount: db.posts.length });
     return deletedPost;
   },
-  deleteAllPosts: (_, __, { db }) => {
+  deleteAllPosts: (_, __, ___) => {
     const length = db.posts.length;
     db.posts.splice(0, length);
     pubsub.publish('postCount', { postCount: db.posts.length });
@@ -98,7 +99,7 @@ export const Mutation = {
   },
 
   //Comment
-  createComment: (_, { data }, { db }) => {
+  createComment: (_, { data }, ___) => {
     const comment = {
       id: nanoid(),
       ...data,
@@ -110,7 +111,7 @@ export const Mutation = {
 
     return comment;
   },
-  updateComment: (_, { id, data }, { db }) => {
+  updateComment: (_, { id, data }, ___) => {
     const comment_index = db.comments.findIndex((comment) => comment.id === id);
 
     if (comment_index === -1) {
@@ -124,7 +125,7 @@ export const Mutation = {
     pubsub.publish('commentUpdated', { commentUpdated: updatedComment });
     return updatedComment;
   },
-  deleteComment: (_, { id }, { db }) => {
+  deleteComment: (_, { id }, ___) => {
     const comment_index = db.comments.findIndex((comment) => comment.id === id);
 
     if (comment_index === -1) {
@@ -137,7 +138,7 @@ export const Mutation = {
     pubsub.publish('commentDeleted', { commentDeleted: deletedComment });
     return deletedComment;
   },
-  deleteAllComments: (_, __, { db }) => {
+  deleteAllComments: (_, __, ___) => {
     const length = db.comments.length;
     db.comments.splice(0, length);
     pubsub.publish('commentCount', { commentCount: db.comments.length });

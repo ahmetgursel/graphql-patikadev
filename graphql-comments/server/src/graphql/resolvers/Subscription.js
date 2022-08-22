@@ -1,5 +1,6 @@
 import { withFilter } from 'graphql-subscriptions';
 import pubsub from '../../pubsub';
+import db from '../../data';
 
 export const Subscription = {
   // user
@@ -31,10 +32,10 @@ export const Subscription = {
     subscribe: (_, __, ___) => pubsub.asyncIterator('postDeleted'),
   },
   postCount: {
-    subscribe: (_, __, { pubsub, db }) => {
-      setTimeout(() =>
-        pubsub.publish('postCount', { postCount: db.posts.length })
-      );
+    subscribe: (_, __, ___) => {
+      setTimeout(() => {
+        pubsub.publish('postCount', { postCount: db.posts.length });
+      }, 100);
 
       return pubsub.asyncIterator('postCount');
     },

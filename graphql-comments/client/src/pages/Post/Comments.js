@@ -3,19 +3,39 @@ import { Divider, Button, Comment, List } from 'antd';
 import { useLazyQuery } from '@apollo/client';
 import styles from './styles.module.css';
 // import Loading from 'components/Loading';
-import { GET_POST_COMMENTS } from './queries';
+import { GET_POST_COMMENTS, COMMENTS_SUBSCRIPTION } from './queries';
 
 function Comments({ post_id }) {
   const [btnIsVisible, setBtnIsVisible] = useState(true);
 
-  const [loadComments, { loading, error, data }] = useLazyQuery(
-    GET_POST_COMMENTS,
-    {
+  const [loadComments, { called, loading, error, data, subscribeToMore }] =
+    useLazyQuery(GET_POST_COMMENTS, {
       variables: {
         id: post_id,
       },
+    });
+
+  useEffect(() => {
+    if (!loading && called) {
+      subscribeToMore({
+        document: COMMENTS_SUBSCRIPTION,
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) {
+            return prev;
+          }
+
+          const newCommentItem = subscriptionData.data.commentCreated;
+
+          return {
+            post: {
+              ...prev.post,
+              comment: [...prev.post.comment, newCommentItem],
+            },
+          };
+        },
+      });
     }
-  );
+  }, [loading, called, subscribeToMore]);
 
   useEffect(() => {
     if (!loading && data) {

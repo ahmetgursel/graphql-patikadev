@@ -1,9 +1,14 @@
 import React from 'react';
 import { Button, Form, Input, Select } from 'antd';
+import { useQuery } from '@apollo/client';
+import { GET_USERS } from './queries';
+import styles from './styles.module.css';
 
 const { Option } = Select;
 
 function NewPostForm() {
+  const { loading: get_users_loading, data: users_data } = useQuery(GET_USERS);
+
   return (
     <Form
       name='basic'
@@ -39,15 +44,23 @@ function NewPostForm() {
           },
         ]}
       >
-        <Select placeholder='Please select a user!' allowClear>
-          <Option value='male'>male</Option>
-          <Option value='female'>female</Option>
-          <Option value='other'>other</Option>
+        <Select
+          disabled={get_users_loading}
+          loading={get_users_loading}
+          placeholder='Please select a user!'
+          size='large'
+        >
+          {users_data &&
+            users_data.users.map((item) => (
+              <Option key={item.id} value={item.id}>
+                {item.fullName}
+              </Option>
+            ))}
         </Select>
       </Form.Item>
 
-      <Form.Item>
-        <Button type='primary' htmlType='submit'>
+      <Form.Item className={styles.buttons}>
+        <Button size='large' type='primary' htmlType='submit'>
           Submit
         </Button>
       </Form.Item>

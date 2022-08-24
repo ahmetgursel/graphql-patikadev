@@ -6,7 +6,6 @@ import { POST_COUNT_SUBSCRIPTION } from './queries';
 
 function PostCounter() {
   const { loading, data } = useSubscription(POST_COUNT_SUBSCRIPTION);
-  console.log(data);
 
   if (!loading)
     return (

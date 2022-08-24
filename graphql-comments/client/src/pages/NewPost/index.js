@@ -1,9 +1,14 @@
 import React from 'react';
 
+import NewPostForm from './NewPostForm';
+import { Typography } from 'antd';
+const { Title } = Typography;
+
 function NewPost() {
   return (
     <div>
-      <h1>New Post</h1>
+      <Title level={2}>New Post</Title>
+      <NewPostForm />
     </div>
   );
 }

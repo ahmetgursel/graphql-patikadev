@@ -1,51 +1,77 @@
-import React from 'react';
-import { Button, Form, Input, Select } from 'antd';
-import { useQuery } from '@apollo/client';
-import { GET_USERS } from './queries';
+import { Button, Form, Input, Select, message } from 'antd';
+import { useQuery, useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+import { GET_USERS, NEW_POST_MUTATION } from './queries';
 import styles from './styles.module.css';
 
 const { Option } = Select;
 
 function NewPostForm() {
+  const navigate = useNavigate();
+  const [savePost, { loading }] = useMutation(NEW_POST_MUTATION);
   const { loading: get_users_loading, data: users_data } = useQuery(GET_USERS);
+
+  const handleSubmit = async (values) => {
+    try {
+      await savePost({
+        variables: {
+          data: values,
+        },
+      });
+
+      message.success('Post saved!', 4);
+      navigate('/');
+    } catch (e) {
+      console.log(e);
+      message.error('Post not saved!', 10);
+    }
+  };
 
   return (
     <Form
       name='basic'
       initialValues={{ remember: true }}
-      // onFinish={onFinish}
-      //onFinishFailed={onFinishFailed}
+      onFinish={handleSubmit}
       autoComplete='off'
     >
       <Form.Item
-        name='username'
+        name='title'
         rules={[{ required: true, message: 'Please input title!' }]}
       >
-        <Input size='large' placeholder='Title' />
+        <Input disabled={loading} size='large' placeholder='Title' />
       </Form.Item>
 
-      <Form.Item name='shortDescription'>
-        <Input size='large' placeholder='Short Description' />
+      <Form.Item name='short_description'>
+        <Input
+          disabled={loading}
+          size='large'
+          placeholder='Short Description'
+        />
       </Form.Item>
 
       <Form.Item name='description'>
-        <Input.TextArea size='large' placeholder='Description' />
+        <Input.TextArea
+          disabled={loading}
+          size='large'
+          placeholder='Description'
+        />
       </Form.Item>
 
       <Form.Item name='cover'>
-        <Input size='large' placeholder='Cover' />
+        <Input disabled={loading} size='large' placeholder='Cover' />
       </Form.Item>
 
       <Form.Item
-        name='user'
+        name='user_id'
         rules={[
           {
             required: true,
+            message: 'Please select user!',
           },
         ]}
       >
         <Select
-          disabled={get_users_loading}
+          disabled={get_users_loading || loading}
           loading={get_users_loading}
           placeholder='Please select a user!'
           size='large'
@@ -60,7 +86,7 @@ function NewPostForm() {
       </Form.Item>
 
       <Form.Item className={styles.buttons}>
-        <Button size='large' type='primary' htmlType='submit'>
+        <Button loading={loading} size='large' type='primary' htmlType='submit'>
           Submit
         </Button>
       </Form.Item>

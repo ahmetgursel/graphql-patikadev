@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { Divider, Button, Comment, List } from 'antd';
 import { useLazyQuery } from '@apollo/client';
 import styles from './styles.module.css';
+import NewCommentForm from './NewCommentForm';
 // import Loading from 'components/Loading';
-import { GET_POST_COMMENTS, COMMENTS_SUBSCRIPTION } from './queries';
+import { GET_POST_COMMENTS, COMMENTS_SUBSCRIPTION } from '../queries';
 
-function Comments({ post_id }) {
+function CommentList({ post_id }) {
   const [btnIsVisible, setBtnIsVisible] = useState(true);
 
   const [loadComments, { called, loading, error, data, subscribeToMore }] =
@@ -49,7 +50,7 @@ function Comments({ post_id }) {
 
   return (
     <>
-      <Divider>Comments</Divider>
+      <Divider orientation='left'>Comments</Divider>
       {btnIsVisible && (
         <div className={styles.showCommentsBtnContainer}>
           <Button loading={loading} onClick={() => loadComments()}>
@@ -58,23 +59,29 @@ function Comments({ post_id }) {
         </div>
       )}
       {!loading && data && (
-        <List
-          className='comment-list'
-          itemLayout='horizontal'
-          dataSource={data.post.comment}
-          renderItem={(item) => (
-            <li>
-              <Comment
-                author={item.user.fullName}
-                avatar={item.user.profile_photo}
-                content={item.text}
-              />
-            </li>
-          )}
-        />
+        <>
+          <List
+            className='comment-list'
+            itemLayout='horizontal'
+            dataSource={data.post.comment}
+            renderItem={(item) => (
+              <li>
+                <Comment
+                  author={item.user.fullName}
+                  avatar={item.user.profile_photo}
+                  content={item.text}
+                />
+              </li>
+            )}
+          />
+
+          <Divider orientation='left'>New Comment</Divider>
+
+          <NewCommentForm />
+        </>
       )}
     </>
   );
 }
 
-export default Comments;
+export default CommentList;

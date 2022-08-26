@@ -20,7 +20,7 @@ function Home() {
         };
       },
     });
-  }, [subscribeToMore]);
+  }, [subscribeToMore, loading]);
 
   if (loading) {
     return <Loading />;

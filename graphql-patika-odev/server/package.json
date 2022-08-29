@@ -4,7 +4,7 @@
   "description": "",
   "main": "data.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon --exec babel-node -- ./src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -25,5 +25,12 @@
     "nanoid": "^3.0.0",
     "nodemon": "^2.0.18",
     "ws": "^8.8.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.18.13",
+    "@babel/node": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "babel-plugin-module-resolver": "^4.1.0"
   }
 }

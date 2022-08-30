@@ -1,0 +1,503 @@
+query getAllUsers{
+  users{
+    id
+    username  
+    email
+    events {
+      id
+    }
+  }
+}
+
+query getOneUser {
+  user(id: "1") {
+    id
+    username
+    email
+    events {
+      id
+    }
+  }
+}
+
+mutation createUser {
+  createUser(data: {
+    username: "Example User"
+    email: "user@example.com"
+  }) {
+    id
+    username
+    email
+  }
+}
+
+mutation updateUser {
+  updateUser(id: "1", data: {
+    username: "Updated User"
+    email: "updated@user.com"
+  }) {
+    id
+    username
+    email
+  }
+}
+
+mutation deleteOneUser {
+  deleteUser(id: "2") {
+    id
+    username
+    email
+  }
+}
+
+mutation deleteAllUser {
+  deleteAllUsers {
+    count
+  }
+}
+
+subscription createdUser {
+  userCreated {
+    id
+    username
+    email
+  }
+}
+
+subscription updatedUser {
+  userUpdated {
+    id
+    username
+    email
+  }
+}
+
+subscription deletedUser {
+  userDeleted {
+    id
+    username
+    email
+  }
+}
+
+query getAllEvent {
+  events{
+    id
+    title
+    desc
+    date
+    from
+    to
+    location_id
+    user_id
+    location {
+      id
+    }
+    participants {
+      id
+    }
+    user {
+      id
+    }
+  }
+}
+
+query getOneEvent {
+  event(id: "1") {
+    id
+    title
+    desc
+    date
+    from
+    to
+    location_id
+    user_id
+    location {
+      id
+    }
+    participants {
+      id
+    }
+    user {
+      id
+    }
+  }
+}
+
+mutation createEvent {
+  createEvent(data: {
+    title: "baslik"
+    desc: "açıklama"
+    date: "2000-01-01"
+    from: "00:00"
+    to: "00:00"
+    location_id: "2"
+    user_id: "2"
+  }) {
+    id
+    title
+    desc
+    date
+    from
+    to
+    location_id
+    user_id
+    location {
+      id
+    }
+    participants {
+      id
+    }
+    user {
+      id
+    }
+  }
+}
+
+mutation updateEvent {
+  updateEvent(id:"1", data: {
+    title: "updated title"
+    desc: "updated desc"
+    date: "2000-01-01"
+    from: "00:00"
+    to: "00:00"
+    location_id: "1"
+    user_id: "1"
+  }) {
+    id
+    title
+    desc
+    date
+    from
+    to
+    location_id
+    user_id
+    location {
+      id
+    }
+    participants {
+      id
+    }
+    user {
+      id
+    }
+  }
+}
+
+mutation deleteOneEvent {
+  deleteEvent(id: "1") {
+    id
+    title
+    desc
+    date
+    from
+    to
+    location_id
+    user_id
+    location {
+      id
+    }
+    participants {
+      id
+    }
+    user {
+      id
+    }
+  }
+}
+
+mutation deleteAllEvent {
+  deleteAllEvents {
+    count
+  }
+}
+
+subscription createdEvent {
+  eventCreated {
+    id
+    title
+    desc
+    date
+    from
+    to
+    location_id
+    user_id
+    location {
+      id
+    }
+    participants {
+      id
+    }
+    user {
+      id
+    }
+  }
+}
+
+subscription updatedEvent {
+  eventUpdated {
+    id
+    title
+    desc
+    date
+    from
+    to
+    location_id
+    user_id
+    location {
+      id
+    }
+    participants {
+      id
+    }
+    user {
+      id
+    }
+  }
+}
+
+subscription deletedEvent {
+  eventDeleted {
+    id
+    title
+    desc
+    date
+    from
+    to
+    location_id
+    user_id
+    location {
+      id
+    }
+    participants {
+      id
+    }
+    user {
+      id
+    }
+  }
+}
+
+
+
+query getAllLocation {
+  locations {
+    id
+    name
+    desc
+    lat
+    lng
+  }
+}
+
+query getOneLocation {
+  location(id: "1") {
+    id
+    name
+    desc
+    lat
+    lng
+  }
+}
+
+mutation createLocation {
+  createLocation(data: {
+    name: "name"
+    desc: "desc"
+    lat: 0.00
+    lng: 0.00
+  }) {
+    id
+    name
+    desc
+    lat
+    lng
+  }
+}
+
+mutation updateLocation {
+  updateLocation(id: "1", data: {
+    name: "updated name"
+    desc: "updated desc"
+    lat: 0.00
+    lng: 0.00
+  }) {
+    id
+    name
+    desc
+    lat
+    lng
+  }
+}
+
+mutation deleteOneLocation {
+  deleteLocation(id: "1") {
+    id
+    name
+    desc
+    lat
+    lng
+  }
+}
+
+mutation deleteAllLocation {
+  deleteAllLocations {
+    count
+  }
+}
+
+subscription createdLocation {
+  locationCreated{
+    id
+    name
+    desc
+    lat
+    lng
+  }
+}
+
+subscription updatedLocation {
+  locationUpdated {
+    id
+    name
+    desc
+    lat
+    lng
+  }
+}
+
+subscription deletedLocation {
+  locationDeleted {
+    id
+    name
+    desc
+    lat
+    lng
+  }
+}
+
+
+
+query getAllParticipant {
+  participants {
+    id
+    user_id
+    event_id
+    user {
+      id
+    }
+    event {
+      id
+    }
+  }
+}
+
+query getOneParticipant {
+  participant(id: "1") {
+    id
+    user_id
+    event_id
+    user {
+      id
+    }
+    event {
+      id
+    }
+  }
+}
+
+mutation createParticipant {
+  createParticipant(data: {
+    event_id: "3"
+    user_id: "2"
+  }) {
+    id
+    user_id
+    event_id
+    user {
+      id
+    }
+    event {
+      id
+    }
+  }
+}
+
+mutation updateParticipant {
+  updateParticipant(id: "1", data:{
+    user_id: "1"
+    event_id: "4"
+  }) {
+    id
+    user_id
+    event_id
+    user {
+      id
+    }
+    event {
+      id
+    }
+  }
+}
+
+mutation deleteOneParticipant {
+  deleteParticipant(id: "1") {
+    id
+    user_id
+    event_id
+    user {
+      id
+    }
+    event {
+      id
+    }
+  }
+}
+
+mutation deleteAllParticipant {
+  deleteAllParticipants {
+    count
+  }
+}
+
+subscription createdParticipant {
+  participantCreated {
+    id
+    user_id
+    event_id
+    user {
+      id
+    }
+    event {
+      id
+    }
+  }
+}
+
+subscription updatedParticipant {
+  participantUpdated {
+    id
+    user_id
+    event_id
+    user {
+      id
+    }
+    event {
+      id
+    }
+  }
+}
+
+subscription deleteParticipant {
+  participantDeleted {
+    id
+    user_id
+    event_id
+    user {
+      id
+    }
+    event {
+      id
+    }
+  }
+}

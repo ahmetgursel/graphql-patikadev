@@ -9,15 +9,30 @@ export const GET_EVENT = gql`
       date
       from
       to
-      location_id
-      user_id
+      user {
+        username
+      }
       location {
-        id
         name
-        desc
         lat
         lng
       }
+      participants {
+        id
+        user {
+          id
+          username
+          email
+        }
+      }
+    }
+  }
+`;
+
+export const GET_PARTICIPANTS = gql`
+  query getEventParticipants($id: ID!) {
+    event(id: $id) {
+      id
       participants {
         id
         user {

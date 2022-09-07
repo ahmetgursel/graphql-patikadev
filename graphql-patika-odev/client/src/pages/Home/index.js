@@ -18,8 +18,6 @@ function Home() {
     return <div>Error: {error.message}</div>;
   }
 
-  console.log(eventsData);
-
   return (
     <div>
       <List

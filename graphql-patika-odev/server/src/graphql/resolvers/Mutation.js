@@ -90,6 +90,7 @@ export const Mutation = {
   //participant
   createParticipant: (_, { data }) => {
     const participant = { id: nanoid(), ...data };
+    pubsub.publish('participantCreated', { participantCreated: participant });
     participants.push(participant);
     return participant;
   },
@@ -139,9 +140,7 @@ export const Mutation = {
     return location;
   },
   updateLocation: (_, { id, data }) => {
-    const location_index = locations.findIndex(
-      (location) => location.id === parseInt(id)
-    );
+    const location_index = locations.findIndex((location) => location.id === parseInt(id));
 
     if (location_index === -1) {
       return new Error('Location not found!');
@@ -155,9 +154,7 @@ export const Mutation = {
     return updatedLocation;
   },
   deleteLocation: (_, { id }) => {
-    const location_index = locations.findIndex(
-      (location) => location.id === parseInt(id)
-    );
+    const location_index = locations.findIndex((location) => location.id === parseInt(id));
 
     if (location_index === -1) {
       return new Error('Location not found!');

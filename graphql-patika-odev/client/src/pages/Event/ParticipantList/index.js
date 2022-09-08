@@ -1,15 +1,38 @@
 import { useState, useEffect } from 'react';
 import { Divider, Button, Avatar, List } from 'antd';
 import { useLazyQuery } from '@apollo/client';
-import { GET_PARTICIPANTS } from '../queries';
+import { GET_PARTICIPANTS, PARTICIPANT_SUBSCRIPTION } from '../queries';
 
 import styles from './styles.module.css';
 
 function ParticipantList({ event_id }) {
   const [btnIsVisible, setBtnIsVisible] = useState(true);
 
-  const [loadParticipants, { loading, error, data: participantData }] =
+  const [loadParticipants, { called, loading, error, data: participantData, subscribeToMore }] =
     useLazyQuery(GET_PARTICIPANTS, { variables: { id: event_id } });
+
+  useEffect(() => {
+    if (!loading && called) {
+      subscribeToMore({
+        document: PARTICIPANT_SUBSCRIPTION,
+        variables: { id: event_id },
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) {
+            return prev;
+          }
+
+          const newParticipantItem = subscriptionData.data.participantCreated;
+
+          return {
+            event: {
+              ...prev.event,
+              participants: [...prev.event.participants, newParticipantItem],
+            },
+          };
+        },
+      });
+    }
+  }, [loading, called, subscribeToMore, event_id]);
 
   useEffect(() => {
     if (!loading && participantData) {
@@ -20,8 +43,6 @@ function ParticipantList({ event_id }) {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  console.log(participantData);
 
   return (
     <>

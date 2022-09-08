@@ -10,7 +10,7 @@ query getAllUsers{
 }
 
 query getOneUser {
-  user(id: "1") {
+  user(id: "7") {
     id
     username
     email
@@ -103,7 +103,7 @@ query getAllEvent {
 }
 
 query getOneEvent {
-  event(id: "1") {
+  event(id: "e1xSrTlyJSTBi2Kw7g9Nw") {
     id
     title
     desc
@@ -111,12 +111,21 @@ query getOneEvent {
     from
     to
     location_id
-    user_id
+    user {
+      username
+    }
     location {
-      id
+      desc
+      lat
+      lng
     }
     participants {
       id
+      event_id
+      user_id
+      user {
+        username
+      }
     }
     user {
       id
@@ -126,7 +135,7 @@ query getOneEvent {
 
 mutation createEvent {
   createEvent(data: {
-    title: "baslik"
+    title: "baslik10"
     desc: "açıklama"
     date: "2000-01-01"
     from: "00:00"
@@ -393,7 +402,7 @@ query getAllParticipant {
 }
 
 query getOneParticipant {
-  participant(id: "1") {
+  participant(id: "7") {
     id
     user_id
     event_id
@@ -408,8 +417,8 @@ query getOneParticipant {
 
 mutation createParticipant {
   createParticipant(data: {
-    event_id: "3"
-    user_id: "2"
+    event_id: "4"
+    user_id: "7"
   }) {
     id
     user_id
@@ -426,7 +435,7 @@ mutation createParticipant {
 mutation updateParticipant {
   updateParticipant(id: "1", data:{
     user_id: "1"
-    event_id: "4"
+    event_id: "5"
   }) {
     id
     user_id
@@ -459,6 +468,20 @@ mutation deleteAllParticipant {
     count
   }
 }
+
+subscription participantCreated {
+    participantCreated(event: "5") {
+      id
+      user_id
+      event_id
+      user {
+        id
+      }
+      event {
+        id
+      }
+    }
+  }
 
 subscription createdParticipant {
   participantCreated {

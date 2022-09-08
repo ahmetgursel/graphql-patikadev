@@ -11,7 +11,7 @@ type Mutation {
 }
 
 type Subscription {
-  participantCreated: Participant!
+  participantCreated(event: ID): Participant!
   participantUpdated: Participant!
   participantDeleted: Participant!
   partipantCount: Int!

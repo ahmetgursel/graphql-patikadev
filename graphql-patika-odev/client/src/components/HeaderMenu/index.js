@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 
 const items = [
   { label: <Link to='/'>Events</Link>, key: '/' }, // remember to pass the key prop
-  { label: <Link to='/new'>New Events</Link>, key: '/new' }, // which is required
+  { label: <Link to='/new-event'>New Events</Link>, key: '/new' }, // which is required
 ];
 
 function HeaderMenu() {

@@ -1,3 +1,4 @@
+import { withFilter } from 'graphql-subscriptions';
 import pubsub from '../../pubsub';
 
 export const Subscription = {
@@ -21,5 +22,20 @@ export const Subscription = {
   },
   eventDeleted: {
     subscribe: () => pubsub.asyncIterator('eventDeleted'),
+  },
+
+  participantCreated: {
+    subscribe: withFilter(
+      () => pubsub.asyncIterator('participantCreated'),
+      (payload, variables) => {
+        return variables.event ? payload.participantCreated.event_id === variables.event : true;
+      }
+    ),
+  },
+  participantUpdated: {
+    subscribe: () => pubsub.asyncIterator('participantUpdated'),
+  },
+  participantDeleted: {
+    subscribe: () => pubsub.asyncIterator('participantDeleted'),
   },
 };

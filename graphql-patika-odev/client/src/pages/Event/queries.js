@@ -44,3 +44,16 @@ export const GET_PARTICIPANTS = gql`
     }
   }
 `;
+
+export const PARTICIPANT_SUBSCRIPTION = gql`
+  subscription participantCreated($id: ID) {
+    participantCreated(event: $id) {
+      id
+      user {
+        id
+        username
+        email
+      }
+    }
+  }
+`;

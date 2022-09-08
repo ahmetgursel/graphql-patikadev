@@ -38,10 +38,13 @@ function Event() {
 
   return (
     <div>
-      <Title level={2}>{eventData.event.title}</Title>
+      <Title className={styles.title} level={2}>
+        {eventData.event.title}
+      </Title>
       <Image
+        className={styles.image}
         width={400}
-        src='https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
+        src='https://source.unsplash.com/random/400x400?sig=incrementingIdentifier'
       />
       <div className={styles.description}>
         <ReadOutlined /> {eventData.event.desc}

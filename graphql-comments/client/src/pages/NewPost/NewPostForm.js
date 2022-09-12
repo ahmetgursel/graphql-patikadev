@@ -34,27 +34,16 @@ function NewPostForm() {
       onFinish={handleSubmit}
       autoComplete='off'
     >
-      <Form.Item
-        name='title'
-        rules={[{ required: true, message: 'Please input title!' }]}
-      >
+      <Form.Item name='title' rules={[{ required: true, message: 'Please input title!' }]}>
         <Input disabled={loading} size='large' placeholder='Title' />
       </Form.Item>
 
       <Form.Item name='short_description'>
-        <Input
-          disabled={loading}
-          size='large'
-          placeholder='Short Description'
-        />
+        <Input disabled={loading} size='large' placeholder='Short Description' />
       </Form.Item>
 
       <Form.Item name='description'>
-        <Input.TextArea
-          disabled={loading}
-          size='large'
-          placeholder='Description'
-        />
+        <Input.TextArea disabled={loading} size='large' placeholder='Description' />
       </Form.Item>
 
       <Form.Item name='cover'>

@@ -10,7 +10,7 @@ type Post {
 
 input CreatePostInput {
   title: String!
-  user_id: ID!
+  user: ID!
   description: String
   short_description: String
   cover: String
@@ -18,7 +18,7 @@ input CreatePostInput {
 
 input UpdatePostInput {
   title: String
-  user_id: ID
+  user: ID
   description: String
   short_description: String
   cover: String

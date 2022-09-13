@@ -29,6 +29,48 @@ query getUser {
   }
 }
 
+mutation createUser {
+  createUser(data: {
+    age: 31
+    fullName: "Mukaddes Gürsel"
+    profile_photo: "https://joeschmoe.io/api/v1/random"
+  }) {
+    id
+    fullName
+    age
+    profile_photo    
+  }
+}
+
+mutation updateUser {
+  updateUser(
+    id: "632031df87c4f4c7bc9fdd2c"
+    data: {
+      age: 56
+    }
+  ) {
+    id
+    fullName
+    age
+    profile_photo
+  }
+}
+
+mutation deleteUser {
+  deleteUser(id: "632031df87c4f4c7bc9fdd2c") {
+    id
+    fullName
+    age
+    profile_photo
+  }
+}
+
+mutation deleteAllUsers{
+  deleteAllUsers {
+    count
+  }
+}
+
 query getAllPosts {
   posts{
     id
@@ -61,6 +103,9 @@ query getPost {
     comments {
       id
       text
+      user {
+        fullName
+      }
     }
   }
 }

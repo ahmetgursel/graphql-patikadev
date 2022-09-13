@@ -5,12 +5,20 @@ import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
+
 import db from './data';
+import mongodb from './db';
 import pubsub from './pubsub';
+
 import typeDefs from '@type-defs';
 import resolvers from '@resolvers';
 
+import User from './models/User';
+import Post from './models/Post';
+import Comment from './models/Comment';
+
 const PORT = 4000;
+mongodb();
 
 async function startApolloServer() {
   // Create schema, which will be used separately by ApolloServer and
@@ -39,6 +47,11 @@ async function startApolloServer() {
     context: {
       pubsub,
       db,
+      _db: {
+        User,
+        Post,
+        Comment,
+      },
     },
     plugins: [
       // Proper shutdown for the HTTP server.
@@ -62,12 +75,8 @@ async function startApolloServer() {
 
   // Now that our HTTP server is fully set up, actually listen.
   httpServer.listen(PORT, () => {
-    console.log(
-      `🚀 Query endpoint ready at http://localhost:${PORT}${server.graphqlPath}`
-    );
-    console.log(
-      `🚀 Subscription endpoint ready at ws://localhost:${PORT}${server.graphqlPath}`
-    );
+    console.log(`🚀 Query endpoint ready at http://localhost:${PORT}${server.graphqlPath}`);
+    console.log(`🚀 Subscription endpoint ready at ws://localhost:${PORT}${server.graphqlPath}`);
   });
 }
 

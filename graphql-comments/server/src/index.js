@@ -8,7 +8,7 @@ import { useServer } from 'graphql-ws/lib/use/ws';
 
 import db from './data';
 import mongodb from './db';
-import pubsub from './pubsub';
+import _pubsub from './pubsub';
 
 import typeDefs from '@type-defs';
 import resolvers from '@resolvers';
@@ -45,7 +45,7 @@ async function startApolloServer() {
   const server = new ApolloServer({
     schema,
     context: {
-      pubsub,
+      _pubsub,
       db,
       _db: {
         User,

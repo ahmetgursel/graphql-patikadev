@@ -4,48 +4,43 @@ import db from '../../data';
 
 export const Mutation = {
   //User
-  createUser: (_, { data }, ___) => {
-    const user = { id: nanoid(), ...data };
-    db.users.push(user);
-
+  createUser: async (_, { data }, { _db }) => {
+    const newUser = new _db.User({ ...data });
+    const user = await newUser.save();
     pubsub.publish('userCreated', { userCreated: user });
     return user;
   },
-  updateUser: (_, { id, data }, ___) => {
-    const user_index = db.users.findIndex((user) => user.id === id);
+  updateUser: async (_, { id, data }, { _db }) => {
+    const isUserExist = await _db.User.findById(id);
 
-    if (user_index === -1) {
+    if (!isUserExist) {
       return new Error('User not found!');
     }
 
-    const updatedUser = (db.users[user_index] = {
-      ...db.users[user_index],
-      ...data,
+    const updatedUser = await _db.User.findByIdAndUpdate(id, data, {
+      new: true,
     });
 
     pubsub.publish('userUpdated', { userUpdated: updatedUser });
 
     return updatedUser;
   },
-  deleteUser: (_, { id }, ___) => {
-    const user_index = db.users.findIndex((user) => user.id === id);
+  deleteUser: async (_, { id }, { _db }) => {
+    const isUserExist = await _db.User.findById(id);
 
-    if (user_index === -1) {
+    if (!isUserExist) {
       return new Error('User not found!');
     }
 
-    const deletedUser = db.users[user_index];
-    db.users.splice(user_index, 1);
+    const deletedUser = await _db.User.findByIdAndDelete(id);
     pubsub.publish('userDeleted', { userDeleted: deletedUser });
-
     return deletedUser;
   },
-  deleteAllUsers: (_, __, ___) => {
-    const length = db.users.length;
-    db.users.splice(0, length);
+  deleteAllUsers: async (_, __, { _db }) => {
+    const deleteUsers = await _db.User.deleteMany({});
 
     return {
-      count: length,
+      count: deleteUsers.deletedCount,
     };
   },
 

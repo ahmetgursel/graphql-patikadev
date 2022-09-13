@@ -1,8 +1,10 @@
-import db from '../../data';
-
 export const Post = {
-  user: (parent, __, ___) =>
-    db.users.find((user) => user.id === parent.user_id),
-  comment: (parent, __, ___) =>
-    db.comments.filter((comment) => comment.post_id === parent.id),
+  user: async (parent, __, { _db }) => {
+    const user = await _db.User.findById(parent.user);
+    return user;
+  },
+  comments: async (parent, __, { _db }) => {
+    const comments = await _db.Comment.find({ post: parent.id });
+    return comments;
+  },
 };

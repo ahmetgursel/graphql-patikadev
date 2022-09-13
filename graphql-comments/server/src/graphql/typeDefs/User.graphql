@@ -22,7 +22,7 @@ type User {
   age: Int!
   profile_photo: String
   posts: [Post!]!
-  comment: [Comment!]!
+  comments: [Comment!]!
 }
 
 input CreateUserInput {

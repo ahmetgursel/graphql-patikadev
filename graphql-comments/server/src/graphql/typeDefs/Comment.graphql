@@ -1,7 +1,6 @@
 type Comment {
   id: ID!
   text: String!
-  post_id: ID!
   user: User!
   post: Post!
 }

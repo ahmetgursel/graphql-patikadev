@@ -1,0 +1,91 @@
+query getAllUsers {
+  users {
+    id
+    fullName
+    profile_photo
+    posts {
+      id
+      title
+    }
+    comments {
+      id
+      text
+    }
+  }
+}
+
+query getUser {
+  user(id:"63200a6463fdcc7e702a9ca1") {
+    fullName
+    profile_photo
+    posts {
+      id
+      title
+    }
+    comments {
+      id
+      text
+    }
+  }
+}
+
+query getAllPosts {
+  posts{
+    id
+    title
+    description
+    short_description
+    cover
+    user {
+      id
+      fullName
+    }
+    comments {
+      id
+      text
+    }
+  }
+}
+
+query getPost {
+  post(id: "6320129c63fdcc7e702a9cac") {
+    id
+    title
+    description
+    short_description
+    cover
+    user {
+      id
+      fullName
+    }
+    comments {
+      id
+      text
+    }
+  }
+}
+
+query getAllComments {
+  comments {
+    id
+    text
+    user {
+      id
+      fullName
+    }
+    post {
+      id
+      title
+    }
+  }
+}
+
+query getComment {
+  comment(id: "6320246863fdcc7e702a9ce6") {
+    text
+    user {
+      id
+      fullName
+    }
+  }
+}

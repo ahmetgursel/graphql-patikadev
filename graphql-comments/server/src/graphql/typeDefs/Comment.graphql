@@ -7,14 +7,14 @@ type Comment {
 
 input CreateCommentInput {
   text: String!
-  post_id: ID!
-  user_id: ID!
+  post: ID!
+  user: ID!
 }
 
 input UpdateCommentInput {
   text: String
-  post_id: ID
-  user_id: ID
+  post: ID
+  user: ID
 }
 
 type DeleteAllOutput {

@@ -1,7 +1,5 @@
-import { nanoid } from 'nanoid';
 import mongoose from 'mongoose';
 import pubsub from '../../pubsub';
-import db from '../../data';
 
 export const Mutation = {
   //User
@@ -51,7 +49,7 @@ export const Mutation = {
     const post = await newPost.save();
     const user = await _db.User.findById(mongoose.Types.ObjectId(data.user));
     user.posts.push(post.id);
-    user.save();
+    await user.save();
 
     const postCount = await _db.Post.countDocuments();
 
@@ -99,8 +97,8 @@ export const Mutation = {
 
   //Comment
   createComment: async (_, { data }, { _db }) => {
-    const newComment = new _db.Comment(data);
-    const commentCreated = newComment.save();
+    const newComment = new _db.Comment({ ...data });
+    const commentCreated = await newComment.save();
 
     const post = await _db.Post.findById(mongoose.Types.ObjectId(data.post));
     const user = await _db.User.findById(mongoose.Types.ObjectId(data.user));

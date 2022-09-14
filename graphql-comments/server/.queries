@@ -15,7 +15,7 @@ query getAllUsers {
 }
 
 query getUser {
-  user(id:"63200a6463fdcc7e702a9ca1") {
+  user(id:"632059301d7b38cb33b839be") {
     fullName
     profile_photo
     posts {
@@ -32,10 +32,10 @@ query getUser {
 mutation createUser {
   createUser(data: {
     age: 31
-    fullName: "Mukaddes Gürsel"
+    fullName: "Ahmet Sanane"
     profile_photo: "https://joeschmoe.io/api/v1/random"
   }) {
-    id
+    _id
     fullName
     age
     profile_photo    
@@ -44,12 +44,12 @@ mutation createUser {
 
 mutation updateUser {
   updateUser(
-    id: "632031df87c4f4c7bc9fdd2c"
+    id: "63219cadbbd78a58672b8a0b"
     data: {
       age: 56
     }
   ) {
-    id
+    _id
     fullName
     age
     profile_photo
@@ -57,8 +57,8 @@ mutation updateUser {
 }
 
 mutation deleteUser {
-  deleteUser(id: "632031df87c4f4c7bc9fdd2c") {
-    id
+  deleteUser(id: "63219cadbbd78a58672b8a0b") {
+    _id
     fullName
     age
     profile_photo
@@ -71,26 +71,53 @@ mutation deleteAllUsers{
   }
 }
 
+subscription createdUser {
+  userCreated {
+    _id
+    fullName
+    age
+    profile_photo
+  }
+}
+
+subscription updatedUser {
+  userUpdated {
+    _id
+    fullName
+    age
+    profile_photo
+  }
+}
+
+subscription deletedUser {
+  userDeleted{
+    _id
+    fullName
+    age
+    profile_photo 
+  }
+}
+
 query getAllPosts {
   posts{
-    id
+    _id
     title
     description
     short_description
     cover
     user {
-      id
+      _id
       fullName
     }
     comments {
-      id
+      _id
       text
     }
   }
 }
 
 query getPost {
-  post(id: "6320129c63fdcc7e702a9cac") {
+  post(id: "63218f570f134d92faef8b0c") {
     id
     title
     description
@@ -110,16 +137,108 @@ query getPost {
   }
 }
 
+mutation createPost {
+  createPost(data: {
+    title: "asdasdasdasdasdasdaaaa"
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum autem cumque velit aliquid, odio quae magnam facere ullam alias reprehenderit aut perferendis pariatur voluptatibus eveniet. Ad temporibus facilis commodi quam unde odit, nihil doloribus libero laboriosam pariatur illo eaque sed maxime vero dolor facere rerum. Eaque, fugiat."
+    short_description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum autem cumque velit..."
+    cover: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+    user: "6321ae50f577d534b68db09c"
+  }) {
+    _id
+    title
+    description
+    short_description
+    cover
+    user {
+      _id
+      fullName
+    }
+  }
+}
+
+mutation updatePost {
+  updatePost(
+    id: "6321ba89c88baf444ed900b7"
+    data: {
+      title: "asdasdasdasdasd"
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum autem cumque velit aliquid, odio quae magnam facere ullam alias reprehenderit aut perferendis pariatur voluptatibus eveniet."
+    short_description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum autem cumque velit..."
+    cover: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+    user: "6321b5d2a5980d19c4e28ee5"
+    }
+  ) {
+    _id
+    title
+    description
+    short_description
+    cover
+  }
+}
+
+mutation deletePost {
+  deletePost(id: "6321ba045062fee296217e17"){
+    _id
+    title
+    description
+    short_description
+    cover
+    user {
+      fullName
+    }
+  }
+}
+
+mutation deleteAllPosts {
+  deleteAllPosts {
+    count
+  }
+}
+
+subscription postCreated {
+  postCreated(user_id: "6321b5d2a5980d19c4e28ee5") {
+    _id
+    title
+    description
+    short_description
+    cover
+  }
+}
+
+subscription postUpdated {
+  postUpdated {
+    _id
+    title
+    description
+    short_description
+    cover
+  }
+}
+
+subscription postDeleted {
+  postDeleted {
+    _id
+    title
+    description
+    short_description
+    cover
+  }
+}
+
+subscription postCount {
+  postCount
+}
+
 query getAllComments {
   comments {
-    id
+    _id
     text
     user {
-      id
+      _id
       fullName
     }
     post {
-      id
+      _id
       title
     }
   }
@@ -129,8 +248,81 @@ query getComment {
   comment(id: "6320246863fdcc7e702a9ce6") {
     text
     user {
-      id
+      _id
       fullName
     }
   }
+}
+
+mutation createComment {
+  createComment(data: {
+    text: "Bu Mehmet'in bir deneme yorumudur."
+    user: "6321ae50f577d534b68db09c"
+    post: "6321bd2666c3d634376c7059"
+  }) {
+    _id
+    text
+  }
+}
+
+mutation updateComment {
+  updateComment(
+    id: "6321c043997fccdeeb61f6f6"
+    data: {
+      text: "Bu Mehmet'in güncellenmiş bir yorumudur."
+    }
+  ) {
+    _id
+    text
+    post {
+      title
+    }
+    user {
+      fullName
+    }
+  }
+}
+
+mutation deleteComment {
+  deleteComment(id: "6321c043997fccdeeb61f6f6") {
+    _id
+    text
+    user {
+      fullName
+    }
+    post {
+      title
+    }
+  }
+}
+
+mutation deleteAllComment {
+  deleteAllComments {
+    count
+  }
+}
+
+subscription createdComment {
+  commentCreated {
+    _id
+    text
+  }
+}
+
+subscription updatedComment {
+  commentUpdated {
+    _id
+    text
+  }
+}
+
+subscription deletedComment {
+  commentDeleted {
+    _id
+    text
+  }
+}
+
+subscription commentCount {
+  commentCount
 }

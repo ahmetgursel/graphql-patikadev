@@ -1,5 +1,5 @@
 type Comment {
-  id: ID!
+  _id: ID!
   text: String!
   user: User!
   post: Post!
@@ -34,7 +34,7 @@ type Mutation {
 }
 
 type Subscription {
-  commentCreated(post_id: ID): Comment!
+  commentCreated: Comment!
   commentUpdated: Comment!
   commentDeleted: Comment!
   commentCount: Int!

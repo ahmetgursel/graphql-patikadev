@@ -1,6 +1,5 @@
 import { withFilter } from 'graphql-subscriptions';
 import pubsub from '../../pubsub';
-import db from '../../data';
 
 export const Subscription = {
   // user
@@ -19,9 +18,7 @@ export const Subscription = {
     subscribe: withFilter(
       (_, __, ___) => pubsub.asyncIterator('postCreated'),
       (payload, variables) => {
-        return variables.user_id
-          ? payload.postCreated.user_id === variables.user_id
-          : true;
+        return variables.user_id ? payload.postCreated.user === variables.user_id : true;
       }
     ),
   },
@@ -32,26 +29,14 @@ export const Subscription = {
     subscribe: (_, __, ___) => pubsub.asyncIterator('postDeleted'),
   },
   postCount: {
-    subscribe: (_, __, ___) => {
-      setTimeout(() => {
-        pubsub.publish('postCount', { postCount: db.posts.length });
-      }, 100);
-
-      return pubsub.asyncIterator('postCount');
-    },
+    subscribe: (_, __, ___) => pubsub.asyncIterator('postCount'),
   },
 
   // comment
   commentCreated: {
-    subscribe: withFilter(
-      (_, __, ___) => pubsub.asyncIterator('commentCreated'),
-      (payload, variables) => {
-        return variables.post_id
-          ? payload.commentCreated.post_id === variables.post_id
-          : true;
-      }
-    ),
+    subscribe: (_, __, ___) => pubsub.asyncIterator('commentCreated'),
   },
+
   commentUpdated: {
     subscribe: (_, __, ___) => pubsub.asyncIterator('commentUpdated'),
   },
@@ -59,12 +44,6 @@ export const Subscription = {
     subscribe: (_, __, ___) => pubsub.asyncIterator('commentDeleted'),
   },
   commentCount: {
-    subscribe: (_, __, ___) => {
-      setTimeout(() =>
-        pubsub.publish('commentCount', { commentCount: comments.length })
-      );
-
-      return pubsub.asyncIterator('commentCount');
-    },
+    subscribe: (_, __, ___) => pubsub.asyncIterator('commentCount'),
   },
 };

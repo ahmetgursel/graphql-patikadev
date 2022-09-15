@@ -9,12 +9,14 @@ import { GET_POST_COMMENTS, COMMENTS_SUBSCRIPTION } from '../queries';
 function CommentList({ post_id }) {
   const [btnIsVisible, setBtnIsVisible] = useState(true);
 
-  const [loadComments, { called, loading, error, data, subscribeToMore }] =
-    useLazyQuery(GET_POST_COMMENTS, {
+  const [loadComments, { called, loading, error, data, subscribeToMore }] = useLazyQuery(
+    GET_POST_COMMENTS,
+    {
       variables: {
         id: post_id,
       },
-    });
+    }
+  );
 
   useEffect(() => {
     if (!loading && called) {
@@ -63,9 +65,9 @@ function CommentList({ post_id }) {
           <List
             className='comment-list'
             itemLayout='horizontal'
-            dataSource={data.post.comment}
+            dataSource={data.post.comments}
             renderItem={(item) => (
-              <li>
+              <li key={item._id}>
                 <Comment
                   author={item.user.fullName}
                   avatar={item.user.profile_photo}

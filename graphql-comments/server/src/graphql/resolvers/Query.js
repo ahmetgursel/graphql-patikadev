@@ -1,5 +1,3 @@
-import db from '../../data';
-
 export const Query = {
   // user
   users: async (_, __, { _db }) => {

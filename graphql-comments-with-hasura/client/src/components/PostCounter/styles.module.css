@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+}
+
+.counterTitle {
+  color: #000;
+  font-weight: bold;
+
+}

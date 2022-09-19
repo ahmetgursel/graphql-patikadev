@@ -7,10 +7,12 @@ import { POST_COUNT_SUBSCRIPTION } from './queries';
 function PostCounter() {
   const { loading, data } = useSubscription(POST_COUNT_SUBSCRIPTION);
 
+  const postCount = data?.posts_aggregate?.aggregate?.count;
+
   if (!loading)
     return (
       <div className={styles.container}>
-        <Badge count={loading ? '?' : data.postCount} size='small'>
+        <Badge count={loading ? '?' : postCount} size='small'>
           <Avatar shape='square' size='medium'>
             <span className={styles.counterTitle}>Posts</span>
           </Avatar>

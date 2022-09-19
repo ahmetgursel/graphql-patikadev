@@ -16,7 +16,7 @@ function NewCommentForm({ post_id }) {
     try {
       await createComment({
         variables: {
-          data: { ...values, post: post_id },
+          input: { ...values, post_id },
         },
       });
 
@@ -32,7 +32,7 @@ function NewCommentForm({ post_id }) {
     <Form name='basic' onFinish={handleSubmit} autoComplete='off' ref={formRef}>
       <Form.Item
         disabled={loading}
-        name='user'
+        name='user_id'
         rules={[
           {
             required: true,
@@ -48,7 +48,7 @@ function NewCommentForm({ post_id }) {
         >
           {users_data &&
             users_data.users.map((item) => (
-              <Option key={item._id} value={item._id}>
+              <Option key={item.id} value={item.id}>
                 {item.fullName}
               </Option>
             ))}

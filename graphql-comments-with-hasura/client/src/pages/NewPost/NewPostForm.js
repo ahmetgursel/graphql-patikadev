@@ -15,7 +15,7 @@ function NewPostForm() {
     try {
       await savePost({
         variables: {
-          data: values,
+          input: values,
         },
       });
 
@@ -51,7 +51,7 @@ function NewPostForm() {
       </Form.Item>
 
       <Form.Item
-        name='user'
+        name='user_id'
         rules={[
           {
             required: true,
@@ -67,7 +67,7 @@ function NewPostForm() {
         >
           {users_data &&
             users_data.users.map((item) => (
-              <Option key={item._id} value={item._id}>
+              <Option key={item.id} value={item.id}>
                 {item.fullName}
               </Option>
             ))}

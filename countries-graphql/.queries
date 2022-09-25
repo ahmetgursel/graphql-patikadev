@@ -1,0 +1,80 @@
+query getAllLanguage {
+  languages {
+    code
+    name
+    countries {
+      id
+      country
+      continents {
+        name
+      }
+    }
+  }
+}
+
+query getOneLanguage {
+  language(code: "aa") {
+    code
+    name
+    countries {
+      id
+      country
+      continents {
+        name
+      }
+    }
+  }
+}
+
+query getAllCountries {
+  countries {
+    id
+    country
+    languages {
+      code
+      name
+    }
+    continents {
+      code
+      name
+    }
+    
+  }
+}
+
+query getOneCountry {
+  country(id: "5") {
+    id
+    country
+    continents {
+      code
+      name
+    }
+    languages {
+      name
+      code
+    }
+  }
+}
+
+query getAllContinent {
+  continents {
+    code
+    name
+    countries {
+      id
+      country
+    }
+  }
+}
+
+query getOneContinent {
+  continent(code: "AS") {
+    code
+    name
+    countries {
+      id
+      country
+    }
+  }
+}

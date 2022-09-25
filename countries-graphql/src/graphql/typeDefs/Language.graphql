@@ -1,0 +1,26 @@
+type Language {
+  code: ID!
+  name: String!
+  countries: [Country!]!
+}
+
+input CreateLanguageInput {
+  code: ID!
+  name: String!
+}
+
+input UpdateLanguageInput {
+  name: String!
+}
+
+type Query {
+  languages: [Language!]!
+  language(code: ID!): Language!
+}
+
+type Mutation {
+  createLanguage(data: CreateLanguageInput!): Language!
+  updateLanguage(code: ID!, data: UpdateLanguageInput!): Language!
+  deleteLanguage(code: ID!): Language!
+  deleteAllLanguage: DeleteAllOutput!
+}

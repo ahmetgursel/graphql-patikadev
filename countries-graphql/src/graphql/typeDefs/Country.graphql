@@ -1,0 +1,33 @@
+type Country {
+  id: ID!
+  country: String!
+  language_codes: [ID!]
+  continent_code: ID!
+  languages: [Language!]!
+  continents: Continent!
+}
+
+input CreateCountryInput {
+  id: ID!
+  country: String!
+  language_codes: [ID!]
+  continent_code: ID!
+}
+
+input UpdateCountryInput {
+  country: String!
+  language_codes: [ID!]
+  continent_code: ID!
+}
+
+type Query {
+  countries: [Country!]!
+  country(id: ID!): Country!
+}
+
+type Mutation {
+  createCountry(data: CreateCountryInput!): Country!
+  updateCountry(id: ID!, data: UpdateCountryInput!): Country!
+  deleteCountry(id: ID!): Country!
+  deleteAllCountry: DeleteAllOutput!
+}

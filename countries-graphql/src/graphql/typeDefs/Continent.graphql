@@ -1,0 +1,26 @@
+type Continent {
+  code: ID!
+  name: String!
+  countries: [Country!]!
+}
+
+input CreateContinentInput {
+  code: ID!
+  name: String!
+}
+
+input UpdateContinentInput {
+  name: String!
+}
+
+type Query {
+  continents: [Continent!]!
+  continent(code: ID!): Continent!
+}
+
+type Mutation {
+  createContinent(data: CreateContinentInput!): Continent!
+  updateContinent(code: ID!, data: UpdateContinentInput!): Continent!
+  deleteContinent(code: ID!): Continent!
+  deleteAllContinent: DeleteAllOutput!
+}

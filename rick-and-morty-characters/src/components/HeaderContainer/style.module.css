@@ -1,0 +1,20 @@
+.headerContainer {
+  align-items: center;
+  background-image: url('../../assets/cover.18f506d0.webp'),linear-gradient(180deg,#fbc300,#c98a00);
+  background-position: 50%;
+  background-size: cover;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 368px;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.title {
+  font-size: 38px;
+  font-weight: 300;
+  color: #fff;
+}

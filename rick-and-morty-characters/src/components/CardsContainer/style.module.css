@@ -1,0 +1,45 @@
+.container {
+  max-width: 80%;
+  padding: 32px 0px 0px 50px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.card {
+  width: 220px;
+  height: 300px;
+  margin-bottom: 20px;
+}
+
+.col{
+  margin: 0px;
+  padding: 0px;
+}
+
+.species {
+  color: #21243d;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 8px;
+  opacity: .7;
+  text-transform: uppercase;
+}
+
+.name {
+  font-size: 14px;
+  color: #21243d;
+  margin: 0px;
+  padding: 0px;
+}
+
+.location {
+  margin-top: 2px;
+  font-size: 14px;
+  line-height: 18px;
+  color: #21243d;
+}

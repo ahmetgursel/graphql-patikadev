@@ -1,0 +1,49 @@
+.container {
+  width: 260px;
+  padding: 32px 0px 0px 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.genderTitle{
+  font-size: .678rem;
+  font-weight: 600;
+  letter-spacing: .08rem;
+  line-height: 1.6;
+  padding-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.speciesTitle {
+  font-size: .678rem;
+  font-weight: 600;
+  letter-spacing: .08rem;
+  line-height: 1.6;
+  padding-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.buttonText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-size: .678rem;
+  font-weight: 600;
+  letter-spacing: .08rem;
+  line-height: 1.6;
+  margin-left: 8px;
+}
+
+.btn {
+  margin-bottom: 12px;
+  margin-left: 72px;
+}

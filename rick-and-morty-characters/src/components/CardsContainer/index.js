@@ -3,10 +3,10 @@ import { useQuery } from '@apollo/client';
 import { FilterContext, useFilter } from '../../Context/FilterStates';
 import { CHARACTERS_QUERY } from './queries';
 import styles from './style.module.css';
-import PerPage from '../PerPage';
+import PaginationBox from '../PaginationBox';
 
 function CardsContainer() {
-  const { page, setPage, gender, species, name } = useFilter(FilterContext);
+  const { page, gender, species, name } = useFilter(FilterContext);
 
   const { loading, data } = useQuery(CHARACTERS_QUERY, {
     variables: {
@@ -23,9 +23,7 @@ function CardsContainer() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <PerPage />
-      </div>
+      <div className={styles.header}></div>
       <Divider />
       <div>
         <Row>
@@ -44,6 +42,9 @@ function CardsContainer() {
             </Col>
           ))}
         </Row>
+      </div>
+      <div className={styles.paginationBox}>
+        <PaginationBox count={data.characters.info.count} />
       </div>
     </div>
   );

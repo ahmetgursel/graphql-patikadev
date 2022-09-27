@@ -43,3 +43,10 @@
   line-height: 18px;
   color: #21243d;
 }
+
+.paginationBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 100px;
+}

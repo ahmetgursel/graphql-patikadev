@@ -19,3 +19,8 @@ code {
 .ant-card-cover {
   padding: 12px;
 }
+
+.ant-spin{
+  width: 100%;
+  margin: auto;
+}
